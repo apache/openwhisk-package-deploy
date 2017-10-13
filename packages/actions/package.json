@@ -1,0 +1,16 @@
+{
+  "name": "deploy-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deploy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "js-yaml": "^3.9.1",
+    "simple-git": "^1.74.1"
+  }
+}
