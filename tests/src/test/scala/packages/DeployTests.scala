@@ -34,8 +34,8 @@ class DeployTests extends TestHelpers
     val wsk = new Wsk()
 
     //set parameters for deploy tests
-    val deployTestRepo = "https://github.com/beemarie/openwhisk-package-deploy"
-    val incorrectGithubRepo = "https://github.com/beemarie/openwhisk-package-deploy-incorrect"
+    val deployTestRepo = "https://github.com/apache/incubator-openwhisk-package-deploy"
+    val incorrectGithubRepo = "https://github.com/apache/openwhisk-package-deploy-incorrect"
     val malformedRepoUrl = "github.com/ibm-functions/blueprint-hello-world"
     val helloWorldPath = "tests/src/test/scala/testFixtures/helloWorld"
     val helloWorldWithNoManifest = "tests/src/stest/scala/testFixtures/helloWorldNoManifest"
