@@ -21,9 +21,9 @@ package packages
 import org.junit.runner.RunWith
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.junit.JUnitRunner
-import common._
-import spray.json.DefaultJsonProtocol._
-import spray.json._
+import common.{TestHelpers, Wsk, WskProps, WskTestHelpers, _}
+import spray.json.DefaultJsonProtocol.StringJsonFormat
+import spray.json.pimpAny
 
 @RunWith(classOf[JUnitRunner])
 class DeployTests extends TestHelpers
@@ -47,8 +47,10 @@ class DeployTests extends TestHelpers
     val helloWorldAction = "openwhisk-helloworld/helloworld"
     val helloWorldActionPackage = "myPackage/helloworld"
 
+    behavior of "Deploy Package"
+
     //test to create the hello world blueprint from github
-    "Deploy Package" should "create the hello world action from github url" in {
+    it should "create the hello world action from github url" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
         "manifestPath" -> helloWorldPath.toJson))
@@ -63,7 +65,7 @@ class DeployTests extends TestHelpers
     }
 
     //test to create the hello world blueprint from github with myPackage as package name
-    "Deploy Package" should s"create the $helloWorldActionPackage action from github url" in {
+    it should s"create the $helloWorldActionPackage action from github url" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
         "manifestPath" -> helloWorldPackageParam.toJson,
@@ -79,7 +81,7 @@ class DeployTests extends TestHelpers
     }
 
     //test to create a blueprint with no github repo provided
-    "Deploy Package" should "return error if there is no github repo provided" in {
+    it should "return error if there is no github repo provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "manifestPath" -> helloWorldPath.toJson))
         withActivation(wsk.activation, run) {
@@ -90,7 +92,7 @@ class DeployTests extends TestHelpers
     }
 
     //test to create a blueprint with a nonexistant github repo provided
-    "Deploy Package" should "return error if there is an nonexistant repo provided" in {
+    it should "return error if there is an nonexistant repo provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> incorrectGithubRepo.toJson,
         "manifestPath" -> helloWorldPath.toJson))
@@ -102,7 +104,7 @@ class DeployTests extends TestHelpers
     }
 
     //test to create a blueprint with a malformed github repo
-    "Deploy Package" should "return error if there is a malformed gitUrl provided" in {
+    it should "return error if there is a malformed gitUrl provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> malformedRepoUrl.toJson,
         "manifestPath" -> helloWorldPath.toJson))
@@ -114,7 +116,7 @@ class DeployTests extends TestHelpers
     }
 
     //test to create a blueprint with useless EnvData provided
-    "Deploy Package" should "return succeed if useless envData is provided" in {
+    it should "return succeed if useless envData is provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
         "manifestPath" -> helloWorldPath.toJson,
@@ -130,7 +132,7 @@ class DeployTests extends TestHelpers
     }
 
     //test to create a blueprint with an incorrect manifestPath provided
-    "Deploy Package" should "return with failure if incorrect manifestPath is provided" in {
+    it should "return with failure if incorrect manifestPath is provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
         "manifestPath" -> incorrectManifestPath.toJson))
@@ -142,7 +144,7 @@ class DeployTests extends TestHelpers
     }
 
     //test to create a blueprint with manifestPath provided, but no manifestFile existing
-    "Deploy Package" should "return with failure if no manifest exists at manifestPath" in {
+    it should "return with failure if no manifest exists at manifestPath" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
         "manifestPath" -> helloWorldWithNoManifest.toJson))

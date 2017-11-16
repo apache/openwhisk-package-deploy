@@ -7,14 +7,14 @@ WSK_CLI="$OPENWHISK_HOME/bin/wsk"
 
 if [ $# -eq 0 ]
 then
-    echo "Usage: ./uninstall.sh $APIHOST $AUTH"
+    echo "Usage: ./uninstall.sh $EDGE_HOST $AUTH"
 fi
 
-APIHOST="$1"
+EDGE_HOST="$1"
 AUTH="$2"
 
 echo Uninstalling Template Package \
 
-$WSK_CLI --apihost $APIHOST action delete -i --auth $AUTH deploy/wskdeploy
+$WSK_CLI --apihost $EDGE_HOST action delete -i --auth $AUTH deploy/wskdeploy
 
-$WSK_CLI --apihost $APIHOST package delete -i --auth $AUTH deploy
+$WSK_CLI --apihost $EDGE_HOST package delete -i --auth $AUTH deploy
