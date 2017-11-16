@@ -24,7 +24,7 @@ DOCKER="$4"
 # If docker is not provided, set to default version.
 if [ -z "$4" ]
   then
-    DOCKER="openwhisk/wskdeploy:0.8.9.2"
+    DOCKER="openwhisk/wskdeploy:0.8.10"
 fi
 
 # If the auth key file exists, read the key in the file. Otherwise, take the
