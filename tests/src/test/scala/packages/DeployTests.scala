@@ -22,6 +22,7 @@ import org.junit.runner.RunWith
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.junit.JUnitRunner
 import common.{TestHelpers, Wsk, WskProps, WskTestHelpers}
+import spray.json.DefaultJsonProtocol.StringJsonFormat
 import spray.json._
 
 @RunWith(classOf[JUnitRunner])
