@@ -48,7 +48,6 @@ EDGE_HOST=$(grep '^edge.host=' $WHISKPROPS_FILE | cut -d'=' -f2)
 
 # Install Package
 
-cat $WHISKDIR/whisk.properties
 cd $ROOTDIR/packages
 ./installCatalog.sh $AUTH_KEY $EDGE_HOST $WSK_CLI
 
