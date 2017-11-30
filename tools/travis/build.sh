@@ -1,9 +1,11 @@
 #!/bin/bash
+set -e
+
 # Build script for Travis-CI.
 
 SCRIPTDIR=$(cd $(dirname "$0") && pwd)
 ROOTDIR="$SCRIPTDIR/../.."
-WHISKDIR="$ROOTDIR/openwhisk"
+WHISKDIR="$ROOTDIR/../openwhisk"
 
 cd $WHISKDIR
 
@@ -30,7 +32,8 @@ cd $WHISKDIR/ansible
 $ANSIBLE_CMD wipe.yml
 $ANSIBLE_CMD openwhisk.yml
 
-cd $WHISKDIR
+# Set Environment
+export OPENWHISK_HOME=$WHISKDIR
 
 VCAP_SERVICES_FILE="$(readlink -f $WHISKDIR/../tests/credentials.json)"
 
@@ -43,11 +46,11 @@ WSK_CLI=$WHISKDIR/bin/wsk
 AUTH_KEY=$(cat $WHISKDIR/ansible/files/auth.whisk.system)
 EDGE_HOST=$(grep '^edge.host=' $WHISKPROPS_FILE | cut -d'=' -f2)
 
-# Set Environment
-export OPENWHISK_HOME=$WHISKDIR
+# Install Package
 
-# Install the package
-source $ROOTDIR/packages/installCatalog.sh $AUTH_KEY $EDGE_HOST $WSK_CLI
+cat $WHISKDIR/whisk.properties
+cd $ROOTDIR/packages
+./installCatalog.sh $AUTH_KEY $EDGE_HOST $WSK_CLI
 
 # Test
 cd $ROOTDIR
