@@ -43,6 +43,8 @@ VCAP_SERVICES_FILE="$(readlink -f $ROOTDIR/tests/credentials.json)"
 #update whisk.properties to add tests/credentials.json file to vcap.services.file, which is needed in tests
 WHISKPROPS_FILE="$WHISKDIR/whisk.properties"
 sed -i 's:^[ \t]*vcap.services.file[ \t]*=\([ \t]*.*\)$:vcap.services.file='$VCAP_SERVICES_FILE':'  $WHISKPROPS_FILE
+cd $WHISKDIR
+cat whisk.properties
 
 WSK_CLI=$WHISKDIR/bin/wsk
 AUTH_KEY=$(cat $WHISKDIR/ansible/files/auth.whisk.system)
