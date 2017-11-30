@@ -6,14 +6,16 @@ set -e
 SCRIPTDIR=$(cd $(dirname "$0") && pwd)
 ROOTDIR="$SCRIPTDIR/../.."
 WHISKDIR="$ROOTDIR/../openwhisk"
+UTILDIR="$ROOTDIR/../incubator-openwhisk-utilities"
 
-cd $WHISKDIR
-
-tools/build/scanCode.py $ROOTDIR
+# run scancode
+cd $UTILDIR
+scancode/scanCode.py $ROOTDIR
 
 # No point to continue with PRs, since encryption is on
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then exit 0; fi
 
+# Install OpenWhisk
 cd $WHISKDIR/ansible
 
 ANSIBLE_CMD="ansible-playbook -i environments/local"
@@ -25,7 +27,7 @@ $ANSIBLE_CMD initdb.yml
 
 cd $WHISKDIR
 
-./gradlew distDocker
+TERM=dumb ./gradlew distDocker
 
 cd $WHISKDIR/ansible
 
@@ -53,4 +55,4 @@ cd $ROOTDIR/packages
 
 # Test
 cd $ROOTDIR
-./gradlew :tests:test
+TERM=dumb ./gradlew :tests:test
