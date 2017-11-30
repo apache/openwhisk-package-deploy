@@ -38,7 +38,7 @@ $ANSIBLE_CMD openwhisk.yml
 # Set Environment
 export OPENWHISK_HOME=$WHISKDIR
 
-VCAP_SERVICES_FILE="$(readlink -f $WHISKDIR/../tests/credentials.json)"
+VCAP_SERVICES_FILE="$(readlink -f $ROOTDIR/tests/credentials.json)"
 
 #update whisk.properties to add tests/credentials.json file to vcap.services.file, which is needed in tests
 WHISKPROPS_FILE="$WHISKDIR/whisk.properties"
