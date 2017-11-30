@@ -19,8 +19,6 @@ notifications:
 install: true
 
 before_install:
-  - git clone https://github.com/openwhisk/openwhisk.git
-  - cd openwhisk
   - ./tools/travis/setup.sh
 
 script:

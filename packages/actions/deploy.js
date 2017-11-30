@@ -81,7 +81,7 @@ function main(params) {
     command = `printf 'y' | ${__dirname}/wskdeploy -v -m ${manifestFileName} --auth ${wskAuth} --apihost ${wskApiHost}`;
 
     return new Promise((resolve, reject) => {
-      const manifestFilePath = `${repoDir}/${manifestPath}/${manifestFileName}`
+      const manifestFilePath = `${repoDir}/${manifestPath}/${manifestFileName}`;
       if (!fs.existsSync(manifestFilePath)) {
         reject(`Error loading ${manifestFilePath}. Does a manifest file exist?`);
       } else {
@@ -119,7 +119,7 @@ function main(params) {
           });
         });
       }
-    })
+    });
   });
 }
 
@@ -165,6 +165,6 @@ function deleteFolder(pathToDelete) {
     });
     fs.rmdirSync(pathToDelete);
   }
-};
+}
 
 exports.main = main;
