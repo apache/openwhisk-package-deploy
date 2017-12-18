@@ -32,14 +32,10 @@ function main(params) {
 
   // confirm gitUrl was provided as a parameter
   if (!gitUrl) {
-    return sendError(400, 'no github repo url was provided');
-    // reject({
-    //   error: 'Please enter the GitHub repo url in params',
-    // });
+    return sendError(400, 'Please enter the GitHub repo url in params');
   }
 
   if(params.__ow_method === "post") {
-    console.log("MADE IT HERE")
     return new Promise((resolve, reject) => {
 
       // if no manifestPath was provided, use current directory
@@ -53,22 +49,33 @@ function main(params) {
       const repoSplit = params.gitUrl.split('/');
       const repoName = repoSplit[repoSplit.length - 1];
       const localDirName = `${__dirname}/../tmp/${repoName}`;
-      console.log("about to clone");
-      return git()
-      .clone(gitUrl, localDirName, ['--depth', '1'], (err, data) => {
-        if (err) {
-          //reject('There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?', err);
-          reject(sendError(400, 'There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?', err));
-        }
+      const blueprintsDirName = `${__dirname}/blueprints/${repoName}`
+      if (fs.existsSync(blueprintsDirName)) {
         resolve({
-          repoDir: localDirName,
+          repoDir: blueprintsDirName,
           manifestPath,
           manifestFileName: 'manifest.yaml',
           wskAuth,
           wskApiHost,
           envData,
         });
-      });
+      }
+      else {
+        return git()
+        .clone(gitUrl, localDirName, ['--depth', '1'], (err, data) => {
+          if (err) {
+            reject(sendError(400, 'There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?', err));
+          }
+          resolve({
+            repoDir: localDirName,
+            manifestPath,
+            manifestFileName: 'manifest.yaml',
+            wskAuth,
+            wskApiHost,
+            envData,
+          });
+        });
+      }
     })
     .then((data) => {
       const {
@@ -87,7 +94,6 @@ function main(params) {
 
       // If we were passed environment data (Cloudant bindings, etc.) add it to the options for `exec`
       if (envData) {
-        console.log("envData is ", envData);
         execOptions.env = envData;
       } else {
         execOptions.env = {};
@@ -97,25 +103,17 @@ function main(params) {
       command = `printf 'y' | ${__dirname}/../wskdeploy -v -m ${manifestFileName} --auth ${wskAuth} --apihost ${wskApiHost}`;
 
       return new Promise((resolve, reject) => {
-        console.log("command is ", command)
         const manifestFilePath = `${repoDir}/${manifestPath}/${manifestFileName}`;
-        console.log("manifest file path is", manifestFilePath);
         if (!fs.existsSync(manifestFilePath)) {
-          console.log("will reject");
           reject(sendError(400, `Error loading ${manifestFilePath}. Does a manifest file exist?`));
         } else {
-          console.log("just before exec");
           exec(command, execOptions, (err, stdout, stderr) => {
-            console.log("execing command");
             deleteFolder(repoDir);
             if (err) {
-              //reject('Error running `./wskdeploy`: ', err);
               reject(sendError(400, `there was an error running wskdeploy: `, err))
             }
-            console.log("no err?");
             if (stdout) {
               console.log('stdout from wskDeploy: ', stdout, ' type ', typeof stdout)
-
               if (typeof stdout === 'string') {
                 try {
                   stdout = JSON.parse(stdout);
@@ -127,21 +125,13 @@ function main(params) {
               if (typeof stdout === 'object') {
                 if (stdout.error) {
                   stdout.descriptiveError = 'Could not successfully run wskdeploy. Please run again with the verbose flag, -v.';
-                  //reject(stdout);
                   reject(sendError(400, stdout))
                 }
               }
             }
             if (stderr) {
-              console.log('stderr from wskDeploy: ', stderr);
-              //reject(stderr);
               reject(sendError(400, stderr))
             }
-            console.log('Finished! Resolving now');
-            // resolve({
-            //   status: 'success',
-            //   success: true,
-            // });
             resolve({
               statusCode: 200,
               headers: {'Content-Type': 'application/json'},

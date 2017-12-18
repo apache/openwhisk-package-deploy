@@ -37,6 +37,16 @@ PACKAGE_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export WSK_CONFIG_FILE= # override local property file to avoid namespace clashes
 
+#clone all Blueprints
+for bp in blueprint-hello-world blueprint-cloudant-trigger blueprint-messagehub-trigger
+do
+  if [ -e actions/blueprints/$bp ]
+  then
+    rm -rf actions/blueprints/$bp
+  fi
+  git clone --depth 1 https://github.com/ibm-functions/$bp actions/blueprints/$bp
+done
+
 # make webDeploy.zip
 OLD_PATH=`pwd`
 cd actions
@@ -46,8 +56,9 @@ then
     rm -rf webDeploy.zip
 fi
 
+
 cp -f webDeploy_package.json package.json
-zip -r webDeploy.zip package.json webDeploy.js
+zip -r webDeploy.zip package.json webDeploy.js blueprints/
 
 cd $OLD_PATH
 
