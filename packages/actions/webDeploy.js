@@ -20,7 +20,7 @@ function main(params) {
       statusCode: 200,
       headers: {'Content-Type': 'application/json'},
       body: new Buffer(JSON.stringify("success")).toString('base64')
-    }
+    };
   }
 
   // Grab optional envData and manifestPath params for wskdeploy
@@ -49,8 +49,8 @@ function main(params) {
       const repoSplit = params.gitUrl.split('/');
       const repoName = repoSplit[repoSplit.length - 1];
       const localDirName = `${__dirname}/../tmp/${repoName}`;
-      const blueprintsDirName = `${__dirname}/blueprints/${repoName}`
-      if (repoSplit[2] == 'github.com' && repoSplit[3] == 'ibm-functions' && fs.existsSync(blueprintsDirName)) {
+      const blueprintsDirName = `${__dirname}/blueprints/${repoName}`;
+      if (repoSplit[2] === 'github.com' && repoSplit[3] === 'ibm-functions' && fs.existsSync(blueprintsDirName)) {
         resolve({
           repoDir: blueprintsDirName,
           manifestPath,
@@ -110,10 +110,10 @@ function main(params) {
           exec(command, execOptions, (err, stdout, stderr) => {
             deleteFolder(repoDir);
             if (err) {
-              reject(sendError(400, `there was an error running wskdeploy: `, err))
+              reject(sendError(400, `there was an error running wskdeploy: `, err));
             }
             if (stdout) {
-              console.log('stdout from wskDeploy: ', stdout, ' type ', typeof stdout)
+              console.log('stdout from wskDeploy: ', stdout, ' type ', typeof stdout);
               if (typeof stdout === 'string') {
                 try {
                   stdout = JSON.parse(stdout);
@@ -125,18 +125,18 @@ function main(params) {
               if (typeof stdout === 'object') {
                 if (stdout.error) {
                   stdout.descriptiveError = 'Could not successfully run wskdeploy. Please run again with the verbose flag, -v.';
-                  reject(sendError(400, stdout))
+                  reject(sendError(400, stdout));
                 }
               }
             }
             if (stderr) {
-              reject(sendError(400, stderr))
+              reject(sendError(400, stderr));
             }
             resolve({
               statusCode: 200,
               headers: {'Content-Type': 'application/json'},
               body: new Buffer(JSON.stringify({'status': 'success'})).toString('base64')
-            })
+            });
           });
         }
       });
