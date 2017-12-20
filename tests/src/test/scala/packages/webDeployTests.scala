@@ -69,7 +69,7 @@ class WebDeployTests extends TestHelpers
     behavior of "deployWeb Package"
 
     // test to ensure action not obtainable using CLI
-    it should "not be obtainable using the CLI" in {
+    it should "not be usable from the CLI" in {
       wsk.action.get(deployAction, FORBIDDEN)
     }
 
