@@ -65,7 +65,7 @@ class WebDeployTests extends TestHelpers
       assert(response.statusCode() == expectedCode)
       response.body.asString shouldBe expectedResult
     }
-    
+
     behavior of "deployWeb Package"
 
     // test to ensure action not obtainable using CLI
