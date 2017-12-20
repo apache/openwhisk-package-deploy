@@ -14,15 +14,6 @@ let command = '';
  *  @return {object} Promise
  */
 function main(params) {
-
-  if(params.__ow_method === "get") {
-    return {
-      statusCode: 200,
-      headers: {'Content-Type': 'application/json'},
-      body: new Buffer(JSON.stringify("success")).toString('base64')
-    };
-  }
-
   // Grab optional envData and manifestPath params for wskdeploy
   let {
     envData,
@@ -37,7 +28,6 @@ function main(params) {
 
   if(params.__ow_method === "post") {
     return new Promise((resolve, reject) => {
-
       // if no manifestPath was provided, use current directory
       if (!manifestPath) {
         manifestPath = '.';
