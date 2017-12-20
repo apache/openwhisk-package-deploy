@@ -50,7 +50,7 @@ function main(params) {
       const repoName = repoSplit[repoSplit.length - 1];
       const localDirName = `${__dirname}/../tmp/${repoName}`;
       const blueprintsDirName = `${__dirname}/blueprints/${repoName}`
-      if (fs.existsSync(blueprintsDirName)) {
+      if (repoSplit[2] == 'github.com' && repoSplit[3] == 'ibm-functions' && fs.existsSync(blueprintsDirName)) {
         resolve({
           repoDir: blueprintsDirName,
           manifestPath,
@@ -64,7 +64,7 @@ function main(params) {
         return git()
         .clone(gitUrl, localDirName, ['--depth', '1'], (err, data) => {
           if (err) {
-            reject(sendError(400, 'There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?', err));
+            reject(sendError(400, 'There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?'));
           }
           resolve({
             repoDir: localDirName,
@@ -105,7 +105,7 @@ function main(params) {
       return new Promise((resolve, reject) => {
         const manifestFilePath = `${repoDir}/${manifestPath}/${manifestFileName}`;
         if (!fs.existsSync(manifestFilePath)) {
-          reject(sendError(400, `Error loading ${manifestFilePath}. Does a manifest file exist?`));
+          reject(sendError(400, 'Error loading manifest file. Does a manifest file exist?'));
         } else {
           exec(command, execOptions, (err, stdout, stderr) => {
             deleteFolder(repoDir);
@@ -193,7 +193,6 @@ function sendError(statusCode, error, message) {
     if (message) {
         params.message = message;
     }
-
     return {
         statusCode: statusCode,
         headers: { 'Content-Type': 'application/json' },
