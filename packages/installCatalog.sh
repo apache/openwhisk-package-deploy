@@ -13,15 +13,14 @@ set -x
 
 if [ $# -eq 0 ]
   then
-  echo "Usage: ./installCatalog.sh <authkey> <edgehost> <pathtowskcli> <installDeploy> <docker>"
+  echo "Usage: ./installCatalog.sh <authkey> <edgehost> <pathtowskcli> <skipdeploy> <docker>"
 fi
 
 AUTH="$1"
 EDGE_HOST="$2"
 WSK_CLI="$3"
-INSTALL_DEPLOY="${4:-false}"
+SKIP_DEPLOY="${4:-false}"
 DOCKER="$5"
-
 
 # If docker is not provided, set to default version.
 if [ -z "$5" ]
@@ -75,7 +74,7 @@ $WSK_CLI -i --apihost "$EDGE_HOST" action update --auth "$AUTH" "deployWeb/wskde
 
 
 cd actions
-if $INSTALL_DEPLOY
+if [! $SKIP_DEPLOY]
   then
   if [ -e deploy.zip ]
   then
@@ -99,9 +98,3 @@ if $INSTALL_DEPLOY
   -a sampleInput '{"gitUrl":"github.com/my_blueprint", "manifestPath":"runtimes/swift", "envData": "{\"ENV_VARIABLE_1\":\"VALUE_1\", \"ENV_VARIABLE_2\":\"VALUE_2\"}"}' \
   --docker "$DOCKER"
 fi
-
-# $WSK_CLI -i --apihost "$EDGE_HOST" action update --auth "$AUTH" "deployWeb/wskdeploy" "$PACKAGE_HOME/actions/webDeploy.zip" --web true \
-# -a description 'Creates an action that allows you to run wskdeploy from OpenWhisk' \
-# -a parameters '[ {"name":"gitUrl", "required":true, "bindTime":true, "description": "The URL to the GitHub repository to deploy"}, {"name":"manifestPath", "required":false, "bindTime":true, "description": "The relative path to the manifest file from the GitHub repo root"}, {"name":"envData", "required":false, "description": "Blueprint-specific environment data object"} ]' \
-# -a sampleInput '{"gitUrl":"github.com/my_blueprint", "manifestPath":"runtimes/swift", "envData": "{\"ENV_VARIABLE_1\":\"VALUE_1\", \"ENV_VARIABLE_2\":\"VALUE_2\"}"}' \
-# --docker "$DOCKER"
