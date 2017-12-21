@@ -19,14 +19,22 @@ fi
 AUTH="$1"
 EDGE_HOST="$2"
 WSK_CLI="$3"
-SKIP_DEPLOY=$4
+SKIP_DEPLOY="${4:-False}"
 DOCKER="$5"
 
 # If docker is not provided, set to default version.
 if [ -z "$5" ]
   then
-  DOCKER="openwhisk/wskdeploy:0.8.10"
+  if [ $SKIP_DEPLOY = False ] || [ $SKIP_DEPLOY = True ]
+  then
+    DOCKER="openwhisk/wskdeploy:0.8.10"
+  else
+    SKIP_DEPLOY=False
+    DOCKER=$4
+  fi
 fi
+
+echo DOCKER IS $DOCKER
 
 # If the auth key file exists, read the key in the file. Otherwise, take the
 # first argument as the key itself.
