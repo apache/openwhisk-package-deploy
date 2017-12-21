@@ -78,7 +78,7 @@ function main(params) {
           headers: {'Content-Type': 'application/json'},
           body: new Buffer(JSON.stringify({'status': 'success'})).toString('base64')
         });
-      })
+      });
     })
     .catch(
       (err) => {

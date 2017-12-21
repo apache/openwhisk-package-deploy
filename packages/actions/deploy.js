@@ -65,7 +65,7 @@ function main(params) {
         status: 'success',
         success: true,
       });
-    })
+    });
   })
   .catch(
     (err) => {
