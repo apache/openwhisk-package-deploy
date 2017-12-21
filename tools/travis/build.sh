@@ -50,12 +50,18 @@ cat whisk.properties
 WSK_CLI=$WHISKDIR/bin/wsk
 AUTH_KEY=$(cat $WHISKDIR/ansible/files/auth.whisk.system)
 EDGE_HOST=$(grep '^edge.host=' $WHISKPROPS_FILE | cut -d'=' -f2)
+INSTALL_DEPLOY=false
 
 # Install Package
 
 cd $ROOTDIR/packages
-./installCatalog.sh $AUTH_KEY $EDGE_HOST $WSK_CLI
+./installCatalog.sh $AUTH_KEY $EDGE_HOST $WSK_CLI $INSTALL_DEPLOY
 
 # Test
 cd $ROOTDIR
-TERM=dumb ./gradlew :tests:test
+if $INSTALL_DEPLOY
+  then
+  TERM=dumb ./gradlew :tests:test
+else
+  TERM=dumb ./gradlew :tests:test --tests "packages.WebDeployTests"
+fi

@@ -46,7 +46,7 @@ class WebDeployTests extends TestHelpers
     val incorrectGithubRepo = "https://github.com/apache/openwhisk-package-deploy-incorrect"
     val malformedRepoUrl = "github.com/ibm-functions/blueprint-hello-world"
     val helloWorldPath = "tests/src/test/scala/testFixtures/helloWorld"
-    val helloWorldWithNoManifest = "tests/src/stest/scala/testFixtures/helloWorldNoManifest"
+    val helloWorldWithNoManifest = "tests/src/test/scala/testFixtures/helloWorldNoManifest"
     val helloWorldPackageParam = "tests/src/test/scala/testFixtures/helloWorldPackageParam"
     val incorrectManifestPath = "does/not/exist"
     val helloWorldAction = "openwhisk-helloworld/helloworld"
