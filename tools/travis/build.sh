@@ -50,7 +50,7 @@ cat whisk.properties
 WSK_CLI=$WHISKDIR/bin/wsk
 AUTH_KEY=$(cat $WHISKDIR/ansible/files/auth.whisk.system)
 EDGE_HOST=$(grep '^edge.host=' $WHISKPROPS_FILE | cut -d'=' -f2)
-SKIP_DEPLOY=true
+SKIP_DEPLOY=True
 
 # Install Package
 
