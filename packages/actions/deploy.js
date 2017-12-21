@@ -57,7 +57,7 @@ function main(params) {
     });
   })
   .then((result) => {
-    return common.main(result)
+    return common.main(result);
   })
   .then((success) => {
     return new Promise((resolve, reject) => {
@@ -66,18 +66,12 @@ function main(params) {
         success: true,
       });
     })
-    .catch(
-      (err) => {
-        console.log('stderr from wskDeploy: ', stderr);
-        reject(stderr);
-      }
-    )
   })
   .catch(
     (err) => {
-      return ({error: err})
+      return ({error: err});
     }
-  )
+  );
 }
 
 /**

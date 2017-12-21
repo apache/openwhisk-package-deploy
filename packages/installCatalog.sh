@@ -19,7 +19,7 @@ fi
 AUTH="$1"
 EDGE_HOST="$2"
 WSK_CLI="$3"
-SKIP_DEPLOY="${4:-false}"
+SKIP_DEPLOY=$4
 DOCKER="$5"
 
 # If docker is not provided, set to default version.
@@ -74,7 +74,7 @@ $WSK_CLI -i --apihost "$EDGE_HOST" action update --auth "$AUTH" "deployWeb/wskde
 
 
 cd actions
-if [! $SKIP_DEPLOY]
+if [ $SKIP_DEPLOY = False ]
   then
   if [ -e deploy.zip ]
   then

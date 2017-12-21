@@ -69,7 +69,7 @@ function main(params) {
       }
     })
     .then((result) => {
-      return common.main(result)
+      return common.main(result);
     })
     .then((success) => {
       return new Promise((resolve, reject) => {
@@ -79,17 +79,12 @@ function main(params) {
           body: new Buffer(JSON.stringify({'status': 'success'})).toString('base64')
         });
       })
-      .catch(
-        (err) => {
-          reject(err);
-        }
-      )
     })
     .catch(
       (err) => {
         return (sendError(400, err));
       }
-    )
+    );
   }
 }
 
