@@ -63,5 +63,5 @@ if $SKIP_DEPLOY
   then
   TERM=dumb ./gradlew :tests:test --tests "packages.WebDeployTests"
 else
-  TERM=dumb ./gradlew :tests:test
+  TERM=dumb ./gradlew :tests:tests
 fi
