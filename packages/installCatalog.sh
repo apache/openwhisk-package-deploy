@@ -67,11 +67,11 @@ cd actions
 
 if [ -e deployWeb.zip ]
   then
-  rm -rf webDeploy.zip
+  rm -rf deployWeb.zip
 fi
 
-cp -f webDeploy_package.json package.json
-zip -r webDeploy.zip package.json webDeploy.js lib/common.js blueprints/
+cp -f deployWeb_package.json package.json
+zip -r deployWeb.zip package.json deployWeb.js lib/common.js blueprints/
 
 cd $OLD_PATH
 
@@ -79,7 +79,7 @@ $WSK_CLI -i --apihost "$EDGE_HOST" package update --auth "$AUTH" --shared no "de
 -a description "This package offers a convenient way for you to describe and deploy any part of the OpenWhisk programming model using a Manifest file written in YAML." \
 -a prettyName "Whisk Deploy Web"
 
-$WSK_CLI -i --apihost "$EDGE_HOST" action update --auth "$AUTH" "deployWeb/wskdeploy" "$PACKAGE_HOME/actions/webDeploy.zip" --web true \
+$WSK_CLI -i --apihost "$EDGE_HOST" action update --auth "$AUTH" "deployWeb/wskdeploy" "$PACKAGE_HOME/actions/deployWeb.zip" --web true \
 -a description 'Creates an action that allows you to run wskdeploy from OpenWhisk' \
 -a parameters '[ {"name":"gitUrl", "required":true, "bindTime":true, "description": "The URL to the GitHub repository to deploy"}, {"name":"manifestPath", "required":false, "bindTime":true, "description": "The relative path to the manifest file from the GitHub repo root"}, {"name":"envData", "required":false, "description": "Blueprint-specific environment data object"} ]' \
 -a sampleInput '{"gitUrl":"github.com/my_blueprint", "manifestPath":"runtimes/swift", "envData": "{\"ENV_VARIABLE_1\":\"VALUE_1\", \"ENV_VARIABLE_2\":\"VALUE_2\"}"}' \
