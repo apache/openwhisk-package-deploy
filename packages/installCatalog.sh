@@ -22,9 +22,6 @@ WSK_CLI="$3"
 SKIP_DEPLOY="${4:-False}"
 DOCKER="$5"
 
-echo SKIP DEPLOY
-echo $SKIP_DEPLOY
-
 # If docker is not provided, set to default version.
 if [ -z "$5" ]
   then
@@ -36,10 +33,6 @@ if [ -z "$5" ]
     DOCKER=$4
   fi
 fi
-
-echo DOCKER IS $DOCKER
-echo SKIP DEPLOY IS
-echo $SKIP_DEPLOY
 
 # If the auth key file exists, read the key in the file. Otherwise, take the
 # first argument as the key itself.
