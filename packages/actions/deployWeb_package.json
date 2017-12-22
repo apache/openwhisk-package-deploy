@@ -2,7 +2,7 @@
   "name": "deploy-action",
   "version": "1.0.0",
   "description": "",
-  "main": "webDeploy.js",
+  "main": "deployWeb.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

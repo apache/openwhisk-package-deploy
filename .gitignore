@@ -5,4 +5,4 @@ tests/credentials.json
 openwhisk
 packages/actions/blueprints
 packages/actions/package.json
-packages/actions/webDeploy.zip
+packages/actions/deployWeb.zip

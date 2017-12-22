@@ -30,7 +30,7 @@ import com.jayway.restassured.config.SSLConfig
 import spray.json._
 
 @RunWith(classOf[JUnitRunner])
-class WebDeployTests extends TestHelpers
+class DeployWebTests extends TestHelpers
     with WskTestHelpers
     with BeforeAndAfterAll {
 

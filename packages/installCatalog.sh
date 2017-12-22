@@ -61,11 +61,11 @@ do
   git clone --depth 1 https://github.com/ibm-functions/$bp actions/blueprints/$bp
 done
 
-# make webDeploy.zip & install
+# make deployWeb.zip & install
 OLD_PATH=`pwd`
 cd actions
 
-if [ -e webDeploy.zip ]
+if [ -e deployWeb.zip ]
   then
   rm -rf webDeploy.zip
 fi
