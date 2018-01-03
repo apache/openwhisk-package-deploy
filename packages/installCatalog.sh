@@ -13,25 +13,19 @@ set -x
 
 if [ $# -eq 0 ]
   then
-  echo "Usage: ./installCatalog.sh <authkey> <edgehost> <pathtowskcli> <skipdeploy> <docker>"
+  echo "Usage: ./installCatalog.sh <authkey> <edgehost> <pathtowskcli> <docker>"
 fi
 
 AUTH="$1"
 EDGE_HOST="$2"
 WSK_CLI="$3"
-SKIP_DEPLOY="${4:-False}"
-DOCKER="$5"
+DOCKER="$4"
+SKIP_DEPLOY="${SKIP_DEPLOY:-True}"
 
 # If docker is not provided, set to default version.
-if [ -z "$5" ]
-  then
-  if [ $SKIP_DEPLOY = False ] || [ $SKIP_DEPLOY = True ]
+if [ -z "$4" ]
   then
     DOCKER="openwhisk/wskdeploy:0.8.10"
-  else
-    SKIP_DEPLOY=False
-    DOCKER=$4
-  fi
 fi
 
 # If the auth key file exists, read the key in the file. Otherwise, take the
