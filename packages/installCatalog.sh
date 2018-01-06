@@ -38,7 +38,7 @@ PACKAGE_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export WSK_CONFIG_FILE= # override local property file to avoid namespace clashes
 
-#clone all Blueprints
+# clone all Blueprints
 for bp in blueprint-hello-world blueprint-cloudant-trigger blueprint-messagehub-trigger
 do
   if [ -e actions/blueprints/$bp ]
