@@ -37,7 +37,7 @@ $ANSIBLE_CMD openwhisk.yml
 
 # Set Environment
 export OPENWHISK_HOME=$WHISKDIR
-export SKIP_DEPLOY="False"
+export SKIP_DEPLOY="True"
 
 cd $WHISKDIR
 
