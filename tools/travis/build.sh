@@ -37,6 +37,7 @@ $ANSIBLE_CMD openwhisk.yml
 
 # Set Environment
 export OPENWHISK_HOME=$WHISKDIR
+export SKIP_DEPLOY="True"
 
 cd $WHISKDIR
 
@@ -50,12 +51,11 @@ cat whisk.properties
 WSK_CLI=$WHISKDIR/bin/wsk
 AUTH_KEY=$(cat $WHISKDIR/ansible/files/auth.whisk.system)
 EDGE_HOST=$(grep '^edge.host=' $WHISKPROPS_FILE | cut -d'=' -f2)
-SKIP_DEPLOY="True"
 
 # Install Package
 
 cd $ROOTDIR/packages
-./installCatalog.sh $AUTH_KEY $EDGE_HOST $WSK_CLI $SKIP_DEPLOY
+./installCatalog.sh $AUTH_KEY $EDGE_HOST $WSK_CLI
 
 # Test
 cd $ROOTDIR
