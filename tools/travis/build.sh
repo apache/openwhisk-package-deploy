@@ -37,7 +37,7 @@ $ANSIBLE_CMD openwhisk.yml
 
 # Set Environment
 export OPENWHISK_HOME=$WHISKDIR
-export SKIP_DEPLOY="True"
+export INSTALL_WEB_ONLY="True"
 
 cd $WHISKDIR
 
@@ -59,7 +59,7 @@ cd $ROOTDIR/packages
 
 # Test
 cd $ROOTDIR
-if [ $SKIP_DEPLOY = True ]
+if [ $INSTALL_WEB_ONLY = True ]
   then
   TERM=dumb ./gradlew :tests:test --tests "packages.DeployWebTests"
 else
