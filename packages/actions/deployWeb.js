@@ -40,10 +40,10 @@ function main(params) {
       const repoSplit = params.gitUrl.split('/');
       const repoName = repoSplit[repoSplit.length - 1];
       const localDirName = `${__dirname}/../tmp/${repoName}`;
-      const blueprintsDirName = `${__dirname}/blueprints/${repoName}`;
-      if (repoSplit[2] === 'github.com' && repoSplit[3] === 'ibm-functions' && fs.existsSync(blueprintsDirName)) {
+      const templatesDirName = `${__dirname}/templates/${repoName}`;
+      if (repoSplit[2] === 'github.com' && repoSplit[3] === 'ibm-functions' && fs.existsSync(templatesDirName)) {
         resolve({
-          repoDir: blueprintsDirName,
+          repoDir: templatesDirName,
           manifestPath,
           manifestFileName: 'manifest.yaml',
           wskAuth,

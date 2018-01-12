@@ -11,7 +11,7 @@ The package includes the following actions.
 
 ## wskdeploy Parameters
 The `/whisk.system/deploy/wskdeploy` package deploys OpenWhisk assets from a github repository with a defining manifest.  The parameters are as follows:
-- `gitUrl`: A string specifying the location of the github repository containing the assets to be deployed. For example: `https://github.com/ibm-functions/blueprint-cloudant-trigger`
+- `gitUrl`: A string specifying the location of the github repository containing the assets to be deployed. For example: `https://github.com/ibm-functions/template-cloudant-trigger`
 
 - `manifestPath`: Optional. A string specifying the location of the folder enclosing the manifest.yaml file. For example: `src/openwhisk`. If this parameter is not provided, it will default to the root of the github repo.
 
@@ -28,9 +28,9 @@ The `/whisk.system/deploy/wskdeploy` package deploys OpenWhisk assets from a git
 
 ## Setting up your Repository
 
-A simple hello world example of a deployable github repository can be found [here](https://github.com/ibm-functions/blueprint-hello-world/).
+A simple hello world example of a deployable github repository can be found [here](https://github.com/ibm-functions/template-hello-world/).
 
-A more complex example of a deployable github repository, including a trigger, a sequence, and cloudant credentials  can be found [here](https://github.com/ibm-functions/blueprint-cloudant-trigger).
+A more complex example of a deployable github repository, including a trigger, a sequence, and cloudant credentials  can be found [here](https://github.com/ibm-functions/template-cloudant-trigger).
 
 1. Create a github repository with a manifest.yaml at its root, and an actions directory containing any source files.
 * actions
@@ -55,7 +55,7 @@ With the repository created, you can now deploy from it.
 
   ```
   wsk action invoke /whisk.system/deploy/wskdeploy
-  -p gitUrl https://github.com/ibm-functions/blueprint-hello-world/
+  -p gitUrl https://github.com/ibm-functions/template-hello-world/
   -p manifestPath "src/openwhisk"
   ```
 

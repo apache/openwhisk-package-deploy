@@ -38,14 +38,14 @@ PACKAGE_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export WSK_CONFIG_FILE= # override local property file to avoid namespace clashes
 
-# clone all Blueprints
-for bp in blueprint-hello-world blueprint-cloudant-trigger blueprint-messagehub-trigger
+# clone all Templates
+for bp in template-hello-world template-cloudant-trigger template-messagehub-trigger
 do
-  if [ -e actions/blueprints/$bp ]
+  if [ -e actions/templates/$bp ]
     then
-    rm -rf actions/blueprints/$bp
+    rm -rf actions/templates/$bp
   fi
-  git clone --depth 1 https://github.com/ibm-functions/$bp actions/blueprints/$bp
+  git clone --depth 1 https://github.com/ibm-functions/$bp actions/templates/$bp
 done
 
 # make deployWeb.zip & install
@@ -58,7 +58,7 @@ if [ -e deployWeb.zip ]
 fi
 
 cp -f deployWeb_package.json package.json
-zip -r deployWeb.zip package.json deployWeb.js lib/common.js blueprints/
+zip -r deployWeb.zip package.json deployWeb.js lib/common.js templates/
 
 cd $OLD_PATH
 
@@ -68,8 +68,8 @@ $WSK_CLI -i --apihost "$EDGE_HOST" package update --auth "$AUTH" --shared no "de
 
 $WSK_CLI -i --apihost "$EDGE_HOST" action update --auth "$AUTH" "deployWeb/wskdeploy" "$PACKAGE_HOME/actions/deployWeb.zip" --web true \
 -a description 'Creates an action that allows you to run wskdeploy from OpenWhisk' \
--a parameters '[ {"name":"gitUrl", "required":true, "bindTime":true, "description": "The URL to the GitHub repository to deploy"}, {"name":"manifestPath", "required":false, "bindTime":true, "description": "The relative path to the manifest file from the GitHub repo root"}, {"name":"envData", "required":false, "description": "Blueprint-specific environment data object"} ]' \
--a sampleInput '{"gitUrl":"github.com/my_blueprint", "manifestPath":"runtimes/swift", "envData": "{\"ENV_VARIABLE_1\":\"VALUE_1\", \"ENV_VARIABLE_2\":\"VALUE_2\"}"}' \
+-a parameters '[ {"name":"gitUrl", "required":true, "bindTime":true, "description": "The URL to the GitHub repository to deploy"}, {"name":"manifestPath", "required":false, "bindTime":true, "description": "The relative path to the manifest file from the GitHub repo root"}, {"name":"envData", "required":false, "description": "Template-specific environment data object"} ]' \
+-a sampleInput '{"gitUrl":"github.com/my_template", "manifestPath":"runtimes/swift", "envData": "{\"ENV_VARIABLE_1\":\"VALUE_1\", \"ENV_VARIABLE_2\":\"VALUE_2\"}"}' \
 --docker "$DOCKER"
 
 
@@ -94,7 +94,7 @@ if [ $INSTALL_WEB_ONLY = False ]
 
   $WSK_CLI -i --apihost "$EDGE_HOST" action update --auth "$AUTH" "deploy/wskdeploy" "$PACKAGE_HOME/actions/deploy.zip" \
   -a description 'Creates an action that allows you to run wskdeploy from OpenWhisk' \
-  -a parameters '[ {"name":"gitUrl", "required":true, "bindTime":true, "description": "The URL to the GitHub repository to deploy"}, {"name":"manifestPath", "required":false, "bindTime":true, "description": "The relative path to the manifest file from the GitHub repo root"}, {"name":"envData", "required":false, "description": "Blueprint-specific environment data object"} ]' \
-  -a sampleInput '{"gitUrl":"github.com/my_blueprint", "manifestPath":"runtimes/swift", "envData": "{\"ENV_VARIABLE_1\":\"VALUE_1\", \"ENV_VARIABLE_2\":\"VALUE_2\"}"}' \
+  -a parameters '[ {"name":"gitUrl", "required":true, "bindTime":true, "description": "The URL to the GitHub repository to deploy"}, {"name":"manifestPath", "required":false, "bindTime":true, "description": "The relative path to the manifest file from the GitHub repo root"}, {"name":"envData", "required":false, "description": "Template-specific environment data object"} ]' \
+  -a sampleInput '{"gitUrl":"github.com/my_template", "manifestPath":"runtimes/swift", "envData": "{\"ENV_VARIABLE_1\":\"VALUE_1\", \"ENV_VARIABLE_2\":\"VALUE_2\"}"}' \
   --docker "$DOCKER"
 fi
