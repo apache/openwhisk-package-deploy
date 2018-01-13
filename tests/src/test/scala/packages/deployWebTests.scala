@@ -37,11 +37,11 @@ class DeployWebTests extends TestHelpers
     implicit val wskprops = WskProps()
     val wsk = new Wsk()
 
-    //action and web action url
+    // action and web action url
     val deployAction = "/whisk.system/deployWeb/wskdeploy"
     val deployActionURL = s"https://${wskprops.apihost}/api/v1/web${deployAction}.http"
 
-    //set parameters for deploy tests
+    // set parameters for deploy tests
     val deployTestRepo = "https://github.com/apache/incubator-openwhisk-package-deploy"
     val incorrectGithubRepo = "https://github.com/apache/openwhisk-package-deploy-incorrect"
     val malformedRepoUrl = "github.com/ibm-functions/template-hello-world"
@@ -73,7 +73,7 @@ class DeployWebTests extends TestHelpers
       wsk.action.get(deployAction, FORBIDDEN)
     }
 
-    //test to create the hello world template from github
+    // test to create the hello world template from github
     it should "create the hello world action from github url" in {
       makePostCallWithExpectedResult(JsObject(
         "gitUrl" -> JsString(deployTestRepo),
@@ -109,7 +109,7 @@ class DeployWebTests extends TestHelpers
       ), """{"error":"Please enter the GitHub repo url in params"}""", 400)
     }
 
-    //test to create a template with a nonexistant github repo provided
+    // test to create a template with a nonexistant github repo provided
     it should "return error if there is an nonexistant repo provided" in {
       makePostCallWithExpectedResult(JsObject(
         "gitUrl" -> JsString(incorrectGithubRepo),
@@ -118,7 +118,7 @@ class DeployWebTests extends TestHelpers
         "wskAuth" -> JsString(wskprops.authKey)
       ), githubNonExistentStatus, 400)
     }
-    //test to create a template with a malformed github repo
+    // test to create a template with a malformed github repo
     it should "return error if there is a malformed gitUrl provided" in {
       makePostCallWithExpectedResult(JsObject(
         "gitUrl" -> JsString(malformedRepoUrl),
