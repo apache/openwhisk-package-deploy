@@ -39,13 +39,13 @@ PACKAGE_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export WSK_CONFIG_FILE= # override local property file to avoid namespace clashes
 
 # clone all Templates
-for bp in template-hello-world template-cloudant-trigger template-messagehub-trigger
+for tmpl in template-hello-world template-cloudant-trigger template-messagehub-trigger
 do
-  if [ -e actions/templates/$bp ]
+  if [ -e actions/templates/$tmpl ]
     then
-    rm -rf actions/templates/$bp
+    rm -rf actions/templates/$tmpl
   fi
-  git clone --depth 1 https://github.com/ibm-functions/$bp actions/templates/$bp
+  git clone --depth 1 https://github.com/ibm-functions/$tmpl actions/templates/$tmpl
 done
 
 # make deployWeb.zip & install
