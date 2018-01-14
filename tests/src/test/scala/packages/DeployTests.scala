@@ -33,10 +33,10 @@ class DeployTests extends TestHelpers
     implicit val wskprops = WskProps()
     val wsk = new Wsk()
 
-    //set parameters for deploy tests
+    // set parameters for deploy tests
     val deployTestRepo = "https://github.com/apache/incubator-openwhisk-package-deploy"
     val incorrectGithubRepo = "https://github.com/apache/openwhisk-package-deploy-incorrect"
-    val malformedRepoUrl = "github.com/ibm-functions/blueprint-hello-world"
+    val malformedRepoUrl = "github.com/ibm-functions/template-hello-world"
     val helloWorldPath = "tests/src/test/scala/testFixtures/helloWorld"
     val helloWorldWithNoManifest = "tests/src/stest/scala/testFixtures/helloWorldNoManifest"
     val helloWorldPackageParam = "tests/src/test/scala/testFixtures/helloWorldPackageParam"
@@ -49,7 +49,7 @@ class DeployTests extends TestHelpers
 
     behavior of "Deploy Package"
 
-    //test to create the hello world blueprint from github
+    // test to create the hello world template from github
     it should "create the hello world action from github url" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
@@ -64,7 +64,7 @@ class DeployTests extends TestHelpers
         wsk.action.delete(helloWorldAction)
     }
 
-    //test to create the hello world blueprint from github with myPackage as package name
+    // test to create the hello world template from github with myPackage as package name
     it should s"create the $helloWorldActionPackage action from github url" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
@@ -80,7 +80,7 @@ class DeployTests extends TestHelpers
         wsk.action.delete(helloWorldActionPackage)
     }
 
-    //test to create a blueprint with no github repo provided
+    // test to create a template with no github repo provided
     it should "return error if there is no github repo provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "manifestPath" -> helloWorldPath.toJson))
@@ -91,7 +91,7 @@ class DeployTests extends TestHelpers
         }
     }
 
-    //test to create a blueprint with a nonexistant github repo provided
+    // test to create a template with a nonexistant github repo provided
     it should "return error if there is an nonexistant repo provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> incorrectGithubRepo.toJson,
@@ -103,7 +103,7 @@ class DeployTests extends TestHelpers
         }
     }
 
-    //test to create a blueprint with a malformed github repo
+    // test to create a template with a malformed github repo
     it should "return error if there is a malformed gitUrl provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> malformedRepoUrl.toJson,
@@ -115,7 +115,7 @@ class DeployTests extends TestHelpers
         }
     }
 
-    //test to create a blueprint with useless EnvData provided
+    // test to create a template with useless EnvData provided
     it should "return succeed if useless envData is provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
@@ -131,7 +131,7 @@ class DeployTests extends TestHelpers
         wsk.action.delete(helloWorldAction)
     }
 
-    //test to create a blueprint with an incorrect manifestPath provided
+    // test to create a template with an incorrect manifestPath provided
     it should "return with failure if incorrect manifestPath is provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
@@ -143,7 +143,7 @@ class DeployTests extends TestHelpers
         }
     }
 
-    //test to create a blueprint with manifestPath provided, but no manifestFile existing
+    // test to create a template with manifestPath provided, but no manifestFile existing
     it should "return with failure if no manifest exists at manifestPath" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> deployTestRepo.toJson,
