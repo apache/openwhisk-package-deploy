@@ -38,16 +38,6 @@ PACKAGE_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export WSK_CONFIG_FILE= # override local property file to avoid namespace clashes
 
-# clone all Templates
-for tmpl in template-hello-world template-cloudant-trigger template-messagehub-trigger
-do
-  if [ -e actions/templates/$tmpl ]
-    then
-    rm -rf actions/templates/$tmpl
-  fi
-  git clone --depth 1 https://github.com/ibm-functions/$tmpl actions/templates/$tmpl
-done
-
 # make deployWeb.zip & install
 OLD_PATH=`pwd`
 cd actions
@@ -58,7 +48,7 @@ if [ -e deployWeb.zip ]
 fi
 
 cp -f deployWeb_package.json package.json
-zip -r deployWeb.zip package.json deployWeb.js lib/common.js templates/
+zip -r deployWeb.zip package.json deployWeb.js lib/common.js ../../../preInstalled/
 
 cd $OLD_PATH
 

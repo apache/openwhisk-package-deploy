@@ -36,7 +36,6 @@ class DeployTests extends TestHelpers
     // set parameters for deploy tests
     val deployTestRepo = "https://github.com/apache/incubator-openwhisk-package-deploy"
     val incorrectGithubRepo = "https://github.com/apache/openwhisk-package-deploy-incorrect"
-    val malformedRepoUrl = "github.com/ibm-functions/template-hello-world"
     val helloWorldPath = "tests/src/test/scala/testFixtures/helloWorld"
     val helloWorldWithNoManifest = "tests/src/stest/scala/testFixtures/helloWorldNoManifest"
     val helloWorldPackageParam = "tests/src/test/scala/testFixtures/helloWorldPackageParam"
@@ -95,18 +94,6 @@ class DeployTests extends TestHelpers
     it should "return error if there is an nonexistant repo provided" in {
       val run = wsk.action.invoke(deployAction, Map(
         "gitUrl" -> incorrectGithubRepo.toJson,
-        "manifestPath" -> helloWorldPath.toJson))
-        withActivation(wsk.activation, run) {
-          activation =>
-          activation.response.success shouldBe false
-          activation.response.result.get.toString should include("There was a problem cloning from github.")
-        }
-    }
-
-    // test to create a template with a malformed github repo
-    it should "return error if there is a malformed gitUrl provided" in {
-      val run = wsk.action.invoke(deployAction, Map(
-        "gitUrl" -> malformedRepoUrl.toJson,
         "manifestPath" -> helloWorldPath.toJson))
         withActivation(wsk.activation, run) {
           activation =>

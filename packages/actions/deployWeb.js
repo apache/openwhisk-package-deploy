@@ -39,9 +39,13 @@ function main(params) {
       // Extract the name of the repo for the tmp directory
       const repoSplit = params.gitUrl.split('/');
       const repoName = repoSplit[repoSplit.length - 1];
-      const localDirName = `${__dirname}/../tmp/${repoName}`;
-      const templatesDirName = `${__dirname}/templates/${repoName}`;
-      if (repoSplit[2] === 'github.com' && repoSplit[3] === 'ibm-functions' && fs.existsSync(templatesDirName)) {
+      const repoOrg = repoSplit[repoSplit.length - 2];
+      const localDirName = `${__dirname}/../tmp/${repoOrg}/${repoName}`;
+
+      // any pre installed github repos should be a sibling to this package in "preInstalled" folder
+      const templatesDirName = `${__dirname}/preInstalled/${repoOrg}/${repoName}`;
+
+      if (fs.existsSync(templatesDirName)) {
         resolve({
           repoDir: templatesDirName,
           manifestPath,
