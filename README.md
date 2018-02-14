@@ -66,7 +66,7 @@ With the repository created, you can now deploy from it.
 1. `git clone https://github.com/openwhisk/incubator-openwhisk-package-deploy`
 2. `cd incubator-openwhisk-package-deploy/packages`
 3. `./installCatalog.sh AUTH EDGE_HOST WSK_CLI DOCKER`
-   AUTH is your auth key.  EDGE_HOST is the OpenWhisk hostname.  WSK_CLI is location of the Openwhisk CLI binary. DOCKER is an optional param for the desired `wskdeploy` docker image, resolves to `openwhisk/wskdeploy:0.8.12` by default.
+   AUTH is your auth key.  EDGE_HOST is the OpenWhisk hostname.  WSK_CLI is location of the Openwhisk CLI binary. DOCKER is an optional param for the desired `wskdeploy` docker image, resolves to `openwhisk/wskdeploy:0.9.0` by default.
 
 > You can also remove the package using `uninstall.sh` in a similar fashion like so:
 > `./uninstall.sh AUTH EDGE_HOST WSK_CLI`
