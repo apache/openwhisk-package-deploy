@@ -72,7 +72,7 @@ function main(params) {
           resolve({
             statusCode: 200,
             headers: { 'Content-Type': 'application/json' },
-            body: Buffer.from(JSON.stringify({ status: success, activationId: activationId })).toString('base64')
+            body: Buffer.from(JSON.stringify({ status: success, activationId })).toString('base64')
           });
         }))
       .catch(err => (sendError(400, err)));
