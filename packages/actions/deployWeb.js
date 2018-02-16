@@ -15,7 +15,7 @@ let command = '';
  *  @return {object} Promise
  */
 function main(params) {
-  const activationId = process.env.__OW_ACTIVATION_ID
+  const activationId = process.env.__OW_ACTIVATION_ID;
   // Grab optional envData and manifestPath params for wskdeploy
   let {
     envData,
@@ -119,7 +119,7 @@ function getWskApiAuth(params) {
 }
 
 function sendError(statusCode, error, message) {
-  const activationId = process.env.__OW_ACTIVATION_ID
+  const activationId = process.env.__OW_ACTIVATION_ID;
   const params = { error: error, activationId: activationId };
   if (message) {
     params.message = message;
