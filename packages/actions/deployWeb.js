@@ -1,17 +1,12 @@
 const fs = require('fs');
-const path = require('path');
-const exec = require('child_process').exec;
 const git = require('simple-git');
-const yaml = require('js-yaml');
 const common = require('./lib/common');
-
-let command = '';
 
 /**
  * Action to deploy openwhisk elements from a compliant repository
  *  @param {string} gitUrl - github url containing the manifest and elements to deploy
  *  @param {string} manifestPath - (optional) the path to the manifest file, e.g. "openwhisk/src"
- *  @param {object} envData - (optional) some specific details such as cloudant username or cloudant password
+ *  @param {object} envData - (optional) env details such as cloudant username or cloudant password
  *  @return {object} Promise
  */
 function main(params) {
@@ -55,10 +50,8 @@ function main(params) {
           wskApiHost,
           envData,
         });
-      }
-      else {
-        return git()
-        .clone(gitUrl, localDirName, ['--depth', '1'], (err, data) => {
+      } else {
+        return git().clone(gitUrl, localDirName, ['--depth', '1'], (err, data) => {
           if (err) {
             reject('There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?');
           }
@@ -73,23 +66,16 @@ function main(params) {
         });
       }
     })
-    .then((result) => {
-      return common.main(result);
-    })
-    .then((success) => {
-      return new Promise((resolve, reject) => {
-        resolve({
-          statusCode: 200,
-          headers: {'Content-Type': 'application/json'},
-          body: new Buffer(JSON.stringify({status: success, activationId: activationId })).toString('base64')
-        });
-      });
-    })
-    .catch(
-      (err) => {
-        return (sendError(400, err));
-      }
-    );
+      .then(result => common.main(result))
+      .then(success =>
+        new Promise((resolve, reject) => {
+          resolve({
+            statusCode: 200,
+            headers: { 'Content-Type': 'application/json' },
+            body: Buffer.from(JSON.stringify({ status: success, activationId })).toString('base64')
+          });
+        }))
+      .catch(err => (sendError(400, err)));
   }
 }
 
@@ -125,9 +111,9 @@ function sendError(statusCode, error, message) {
     params.message = message;
   }
   return {
-    statusCode: statusCode,
+    statusCode,
     headers: { 'Content-Type': 'application/json' },
-    body: new Buffer(JSON.stringify(params)).toString('base64')
+    body: Buffer.from(JSON.stringify(params)).toString('base64')
   };
 }
 
