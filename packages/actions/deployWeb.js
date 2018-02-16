@@ -120,7 +120,7 @@ function getWskApiAuth(params) {
 
 function sendError(statusCode, error, message) {
   const activationId = process.env.__OW_ACTIVATION_ID;
-  const params = { error: error, activationId: activationId };
+  const params = { error, activationId };
   if (message) {
     params.message = message;
   }
