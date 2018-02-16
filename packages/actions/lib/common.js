@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').exec;
-const git = require('simple-git');
-const yaml = require('js-yaml');
 let command = '';
 
 /**

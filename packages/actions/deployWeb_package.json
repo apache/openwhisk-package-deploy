@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "js-yaml": "^3.9.1",
-    "simple-git": "^1.74.1"
+    "simple-git": "^1.74.1",
   }
 }
