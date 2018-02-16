@@ -15,6 +15,7 @@ let command = '';
  *  @return {object} Promise
  */
 function main(params) {
+  const activationId = process.env.__OW_ACTIVATION_ID;
   // Grab optional envData and manifestPath params for wskdeploy
   let {
     envData,
@@ -80,7 +81,7 @@ function main(params) {
         resolve({
           statusCode: 200,
           headers: {'Content-Type': 'application/json'},
-          body: new Buffer(JSON.stringify({'status': 'success'})).toString('base64')
+          body: new Buffer(JSON.stringify({status: success, activationId: activationId })).toString('base64')
         });
       });
     })
@@ -118,14 +119,15 @@ function getWskApiAuth(params) {
 }
 
 function sendError(statusCode, error, message) {
-  var params = {error: error};
+  const activationId = process.env.__OW_ACTIVATION_ID;
+  const params = { error, activationId };
   if (message) {
-      params.message = message;
+    params.message = message;
   }
   return {
-      statusCode: statusCode,
-      headers: { 'Content-Type': 'application/json' },
-      body: new Buffer(JSON.stringify(params)).toString('base64')
+    statusCode: statusCode,
+    headers: { 'Content-Type': 'application/json' },
+    body: new Buffer(JSON.stringify(params)).toString('base64')
   };
 }
 

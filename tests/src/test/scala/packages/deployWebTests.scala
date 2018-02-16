@@ -52,8 +52,9 @@ class DeployWebTests extends TestHelpers
     val helloWorldActionPackage = "myPackage/helloworld"
 
     // statuses from deployWeb
-    val successStatus = """{"status":"success"}"""
-    val githubNonExistentStatus = """{"error":"There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?"}"""
+    val successStatus = """"status":"success""""
+    val activationId = """"activationId:""""
+    val githubNonExistentStatus = """"error":"There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?""""
 
     def makePostCallWithExpectedResult(params: JsObject, expectedResult: String, expectedCode: Int) = {
       val response = RestAssured.given()
@@ -62,7 +63,8 @@ class DeployWebTests extends TestHelpers
           .body(params.toString())
           .post(deployActionURL)
       assert(response.statusCode() == expectedCode)
-      response.body.asString shouldBe expectedResult
+      response.body.asString should include(expectedResult)
+      response.body.asString.parseJson.asJsObject.getFields("activationId") should have length 1
     }
 
     behavior of "deployWeb Package"
@@ -105,7 +107,7 @@ class DeployWebTests extends TestHelpers
         "manifestPath" -> JsString(helloWorldPath),
         "wskApiHost" -> JsString(wskprops.apihost),
         "wskAuth" -> JsString(wskprops.authKey)
-      ), """{"error":"Please enter the GitHub repo url in params"}""", 400)
+      ), """"error":"Please enter the GitHub repo url in params"""", 400)
     }
 
     // test to create a template with a nonexistant github repo provided
@@ -139,7 +141,7 @@ class DeployWebTests extends TestHelpers
         "manifestPath" -> JsString(incorrectManifestPath),
         "wskApiHost" -> JsString(wskprops.apihost),
         "wskAuth" -> JsString(wskprops.authKey)
-      ), """{"error":"Error loading manifest file. Does a manifest file exist?"}""", 400)
+      ), """"error":"Error loading manifest file. Does a manifest file exist?"""", 400)
     }
 
     // test to create a template with manifestPath provided, but no manifestFile existing
@@ -149,6 +151,6 @@ class DeployWebTests extends TestHelpers
         "manifestPath" -> JsString(helloWorldWithNoManifest),
         "wskApiHost" -> JsString(wskprops.apihost),
         "wskAuth" -> JsString(wskprops.authKey)
-      ), """{"error":"Error loading manifest file. Does a manifest file exist?"}""", 400)
+      ), """"error":"Error loading manifest file. Does a manifest file exist?"""", 400)
     }
 }
