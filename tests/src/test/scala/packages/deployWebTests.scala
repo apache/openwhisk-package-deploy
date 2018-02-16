@@ -64,7 +64,6 @@ class DeployWebTests extends TestHelpers
           .post(deployActionURL)
       assert(response.statusCode() == expectedCode)
       response.body.asString should include(expectedResult)
-      print(response.body.asString.parseJson.asJsObject.getFields("activationId"))
       response.body.asString.parseJson.asJsObject.getFields("activationId") should have length 1
     }
 
