@@ -44,7 +44,7 @@ function main(params) {
       const localDirName = `${__dirname}/../tmp/${repoOrg}/${repoName}`;
 
       // any pre installed github repos should be a sibling to this package in "preInstalled" folder
-      const templatesDirName = `${__dirname}/preInstalled/${repoOrg}/${repoName}`;
+      const templatesDirName = `${__dirname}/../../../preInstalled/${repoOrg}/${repoName}`;
 
       if (fs.existsSync(templatesDirName)) {
         resolve({
