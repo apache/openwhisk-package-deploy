@@ -38,7 +38,7 @@ function main(params) {
       const { wskApiHost, wskAuth } = getWskApiAuth(params);
 
       // Extract the name of the repo for the tmp directory
-      const tmpUrl = gitUrl.replace('https://', '')
+      const tmpUrl = gitUrl.replace('https://', '');
       const repoSplit = tmpUrl.split('/');
       const repoOrg = repoSplit[1];
       const repoName = repoSplit[2];
