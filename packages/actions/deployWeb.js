@@ -38,9 +38,10 @@ function main(params) {
       const { wskApiHost, wskAuth } = getWskApiAuth(params);
 
       // Extract the name of the repo for the tmp directory
-      const repoSplit = params.gitUrl.split('/');
-      const repoName = repoSplit[repoSplit.length - 1];
-      const repoOrg = repoSplit[repoSplit.length - 2];
+      const tmpUrl = gitUrl.replace('https://', '')
+      const repoSplit = tmpUrl.split('/');
+      const repoOrg = repoSplit[1];
+      const repoName = repoSplit[2];
       const localDirName = `${__dirname}/../tmp/${repoOrg}/${repoName}`;
 
       // any pre installed github repos should be a sibling to this package in "preInstalled" folder
@@ -49,47 +50,46 @@ function main(params) {
       if (fs.existsSync(templatesDirName)) {
         resolve({
           repoDir: templatesDirName,
+          usingTemp: false,
           manifestPath,
           manifestFileName: 'manifest.yaml',
           wskAuth,
           wskApiHost,
           envData,
         });
-      }
-      else {
+      } else {
         return git()
-        .clone(gitUrl, localDirName, ['--depth', '1'], (err, data) => {
-          if (err) {
-            reject('There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?');
-          }
+          .clone(gitUrl, localDirName, ['--depth', '1'], (err, data) => {
+            if (err) {
+              reject('There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?');
+            }
+            resolve({
+              repoDir: localDirName,
+              usingTemp: true,
+              manifestPath,
+              manifestFileName: 'manifest.yaml',
+              wskAuth,
+              wskApiHost,
+              envData,
+            });
+          });
+      }
+    })
+      .then((result) => {
+        return common.main(result);
+      })
+      .then((success) => {
+        return new Promise((resolve, reject) => {
           resolve({
-            repoDir: localDirName,
-            manifestPath,
-            manifestFileName: 'manifest.yaml',
-            wskAuth,
-            wskApiHost,
-            envData,
+            statusCode: 200,
+            headers: { 'Content-Type': 'application/json' },
+            body: new Buffer(JSON.stringify({status: success, activationId: activationId })).toString('base64')
           });
         });
-      }
-    })
-    .then((result) => {
-      return common.main(result);
-    })
-    .then((success) => {
-      return new Promise((resolve, reject) => {
-        resolve({
-          statusCode: 200,
-          headers: {'Content-Type': 'application/json'},
-          body: new Buffer(JSON.stringify({status: success, activationId: activationId })).toString('base64')
-        });
-      });
-    })
-    .catch(
-      (err) => {
+      })
+      .catch((err) => {
         return (sendError(400, err));
-      }
-    );
+      });
   }
 }
 
@@ -125,7 +125,7 @@ function sendError(statusCode, error, message) {
     params.message = message;
   }
   return {
-    statusCode: statusCode,
+    statusCode,
     headers: { 'Content-Type': 'application/json' },
     body: new Buffer(JSON.stringify(params)).toString('base64')
   };

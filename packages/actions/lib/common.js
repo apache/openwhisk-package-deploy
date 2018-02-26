@@ -18,6 +18,7 @@ function main(params) {
       wskAuth,
       wskApiHost,
       manifestPath,
+      usingTemp,
       manifestFileName,
       repoDir,
       envData,
@@ -40,11 +41,15 @@ function main(params) {
 
     const manifestFilePath = `${repoDir}/${manifestPath}/${manifestFileName}`;
     if (!fs.existsSync(manifestFilePath)) {
-      deleteFolder(repoDir);
+      if (usingTemp) {
+        deleteFolder(repoDir);
+      }
       reject(`Error loading manifest file. Does a manifest file exist?`);
     } else {
       exec(command, execOptions, (err, stdout, stderr) => {
-        deleteFolder(repoDir);
+        if (usingTemp) {
+          deleteFolder(repoDir);
+        }
         if (err) {
           reject('Error running `./wskdeploy`: ', err);
         }
