@@ -38,9 +38,10 @@ function main(params) {
     const { wskApiHost, wskAuth } = getWskApiAuth(params);
 
     // Extract the name of the repo for the tmp directory
-    const repoSplit = params.gitUrl.split('/');
-    const repoName = repoSplit[repoSplit.length - 1];
-    const repoOrg = repoSplit[repoSplit.length - 2];
+    const tmpUrl = gitUrl.replace('https://', '');
+    const repoSplit = tmpUrl.split('/');
+    const repoOrg = repoSplit[1];
+    const repoName = repoSplit[2];
     const localDirName = `${__dirname}/../tmp/${repoOrg}/${repoName}`;
     const templatesDirName = `${__dirname}/preInstalled/${repoOrg}/${repoName}`;
 
