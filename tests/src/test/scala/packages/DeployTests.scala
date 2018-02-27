@@ -57,7 +57,7 @@ class DeployTests extends TestHelpers
           activation =>
           activation.response.success shouldBe true
           val logs = activation.logs.get.toString
-          logs should include(s"Action $helloWorldAction has been successfully deployed.")
+          logs should include(s"action [$helloWorldAction] has been successfully deployed.")
         }
         // clean up after test
         wsk.action.delete(helloWorldAction)
@@ -73,7 +73,7 @@ class DeployTests extends TestHelpers
           activation =>
           activation.response.success shouldBe true
           val logs = activation.logs.get.toString
-          logs should include(s"Action $helloWorldActionPackage has been successfully deployed.")
+          logs should include(s"action [$helloWorldActionPackage] has been successfully deployed.")
         }
         // clean up after test
         wsk.action.delete(helloWorldActionPackage)
@@ -112,7 +112,7 @@ class DeployTests extends TestHelpers
           activation =>
           activation.response.success shouldBe true
           val logs = activation.logs.get.toString
-          logs should include(s"Action $helloWorldAction has been successfully deployed.")
+          logs should include(s"action [$helloWorldAction] has been successfully deployed.")
         }
         // clean up after test
         wsk.action.delete(helloWorldAction)
