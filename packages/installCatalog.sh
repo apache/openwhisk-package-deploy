@@ -25,7 +25,7 @@ INSTALL_WEB_ONLY="${INSTALL_WEB_ONLY:-True}"
 # If docker is not provided, set to default version.
 if [ -z "$4" ]
   then
-    DOCKER="openwhisk/wskdeploy:0.9.0"
+    DOCKER="openwhisk/wskdeploy:0.9.3"
 fi
 
 # If the auth key file exists, read the key in the file. Otherwise, take the
