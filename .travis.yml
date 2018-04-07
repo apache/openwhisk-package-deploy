@@ -19,6 +19,7 @@ notifications:
 install: true
 
 before_install:
+  - npm conf set strict-ssl false
   - ./tools/travis/setup.sh
 
 script:
