@@ -4,11 +4,12 @@
 #   Package:  openwhisk-helloworld
 #   Action:   openwhisk-helloworld/helloworld.js
 
-packages:
-  openwhisk-helloworld:
-    version: 1.0
-    license: Apache-2.0
-    namespace: _
-    actions:
-      helloworld:
-        function: actions/helloworld.js
+project:
+  namespace: _
+  packages:
+    openwhisk-helloworld:
+      version: 1.0
+      license: Apache-2.0
+      actions:
+        helloworld:
+          function: actions/helloworld.js
