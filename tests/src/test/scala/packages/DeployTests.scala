@@ -23,6 +23,7 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.junit.JUnitRunner
 import common.{TestHelpers, Wsk, WskProps, WskTestHelpers}
 import spray.json._
+import spray.json.DefaultJsonProtocol._
 
 @RunWith(classOf[JUnitRunner])
 class DeployTests extends TestHelpers
