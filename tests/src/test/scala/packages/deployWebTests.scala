@@ -90,7 +90,7 @@ class DeployWebTests extends TestHelpers
     }
 
     // test to create the hello world template with alternate manifest from github
-    it should "create the hello world action from github url" in {
+    it should "create the hello world action with alternate manifest extension from github url" in {
       makePostCallWithExpectedResult(JsObject(
         "gitUrl" -> JsString(deployTestRepo),
         "manifestPath" -> JsString(helloWorldAltManifest),
