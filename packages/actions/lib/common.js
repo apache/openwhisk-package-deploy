@@ -36,10 +36,13 @@ function main(params) {
 
     const manifestFilePath = `${repoDir}/${manifestPath}/${manifestFileName}`;
     if (!fs.existsSync(manifestFilePath)) {
-      if (usingTemp) {
-        deleteFolder(repoDir);
+      const altManifestFilePath = `${repoDir}/${manifestPath}/manifest.yml`;
+      if (!fs.existsSync(altManifestFilePath)) {
+        if (usingTemp) {
+          deleteFolder(repoDir);
+        }
+        reject(new Error('Error loading manifest file. Does a manifest file exist?'));
       }
-      reject(new Error('Error loading manifest file. Does a manifest file exist?'));
     } else {
       exec(command, execOptions, (err, stdout, stderr) => {
         if (usingTemp) {
