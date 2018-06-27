@@ -29,6 +29,7 @@ $ANSIBLE_CMD initdb.yml
 cd $WHISKDIR
 
 TERM=dumb ./gradlew \
+:tools:admin:install \
 :common:scala:install \
 :core:controller:install \
 :core:invoker:install \
