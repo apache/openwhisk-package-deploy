@@ -70,3 +70,4 @@ With the repository created, you can now deploy from it.
 
 > You can also remove the package using `uninstall.sh` in a similar fashion like so:
 > `./uninstall.sh AUTH EDGE_HOST WSK_CLI`
+
