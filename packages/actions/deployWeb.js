@@ -75,7 +75,7 @@ function main(params) {
           resolve({
             statusCode: 200,
             headers: { 'Content-Type': 'application/json' },
-            body: Buffer.from(JSON.stringify({ status: success, activationId })).toString('base64'),
+            body: Buffer.from(JSON.stringify({ status: success, activationId })).toString(),
           });
         }))
       .catch(err => (sendError(400, err)));
@@ -120,7 +120,7 @@ function sendError(statusCode, err, message) {
   return {
     statusCode,
     headers: { 'Content-Type': 'application/json' },
-    body: Buffer.from(JSON.stringify(params)).toString('base64'),
+    body: Buffer.from(JSON.stringify(params)).toString(),
   };
 }
 
