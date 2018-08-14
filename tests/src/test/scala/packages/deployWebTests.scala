@@ -52,9 +52,9 @@ class DeployWebTests extends TestHelpers
     val helloWorldActionPackage = "myPackage/helloworld"
 
     // statuses from deployWeb
-    val successStatus = """"status":"success""""
+    val successStatus = """"status": "success""""
     val activationId = """"activationId:""""
-    val githubNonExistentStatus = """"error":"There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?""""
+    val githubNonExistentStatus = """"error": "There was a problem cloning from github.  Does that github repo exist?  Does it begin with http?""""
 
     def makePostCallWithExpectedResult(params: JsObject, expectedResult: String, expectedCode: Int) = {
       val response = RestAssured.given()
