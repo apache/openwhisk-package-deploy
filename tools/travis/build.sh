@@ -12,9 +12,6 @@ UTILDIR="$ROOTDIR/../incubator-openwhisk-utilities"
 cd $UTILDIR
 scancode/scanCode.py $ROOTDIR
 
-# run jshint
-cd $ROOTDIR/packages
-jshint .
 
 # Install OpenWhisk
 cd $WHISKDIR/ansible
