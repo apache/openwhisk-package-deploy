@@ -81,7 +81,7 @@ function main(params) {
 }
 
 /**
- * recursive funciton to delete a folder, must first delete items inside.
+ * recursive function to delete a folder, must first delete items inside.
  * @param  {string} pathToDelete    inclusive path to folder to delete
  */
 function deleteFolder(pathToDelete) {
