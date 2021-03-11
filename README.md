@@ -15,7 +15,7 @@ The `/whisk.system/deploy/wskdeploy` package deploys OpenWhisk assets from a git
 
 - `manifestPath`: Optional. A string specifying the location of the folder enclosing the manifest.yaml file. For example: `src/openwhisk`. If this parameter is not provided, it will default to the root of the github repo.
 
-- `envData`: Optional. A string with a json object providing any optional enviroment data specified by the manifest.yaml file. For example:
+- `envData`: Optional. A string with a json object providing any optional environment data specified by the manifest.yaml file. For example:
   ```
   "{
     "CLOUDANT_HOSTNAME": "some-hostname-bluemix.cloudant.com",
@@ -51,7 +51,7 @@ If you would like the manifest.yaml file to be in a different location, you can 
 
 With the repository created, you can now deploy from it.
 
-- For the most simple manifests, with no associated services you can run the command with a gitUrl parameter and a manifestPath parameter which tells wskdeploy which language you want from your project.
+- For the simplest manifests, with no associated services you can run the command with a gitUrl parameter, and a manifestPath parameter which tells wskdeploy which language you want from your project.
 
   ```
   wsk action invoke /whisk.system/deploy/wskdeploy

@@ -111,8 +111,8 @@ class DeployWebTests extends TestHelpers
       ), """"error": "Please enter the GitHub repo url in params"""", 400)
     }
 
-    // test to create a template with a nonexistant github repo provided
-    it should "return error if there is an nonexistant repo provided" in {
+    // test to create a template with a nonexistent github repo provided
+    it should "return error if there is an nonexistent repo provided" in {
       makePostCallWithExpectedResult(JsObject(
         "gitUrl" -> JsString(incorrectGithubRepo),
         "manifestPath" -> JsString(helloWorldPath),
