@@ -1,0 +1,15 @@
+# Wskdeploy manifest for hello-world
+
+# Deployment using this manifest file creates the following OpenWhisk components:
+#   Package:  openwhisk-helloworld
+#   Action:   openwhisk-helloworld/helloworld.js
+
+project:
+  namespace: _
+  packages:
+    openwhisk-helloworld:
+      version: 1.0
+      license: Apache-2.0
+      actions:
+        helloworldAlt:
+          function: actions/helloworld.js

@@ -46,9 +46,11 @@ class DeployWebTests extends TestHelpers
     val incorrectGithubRepo = "https://github.com/apache/openwhisk-package-deploy-incorrect"
     val helloWorldPath = "tests/src/test/scala/testFixtures/helloWorld"
     val helloWorldWithNoManifest = "tests/src/test/scala/testFixtures/helloWorldNoManifest"
+    val helloWorldAltManifest = "tests/src/test/scala/testFixtures/helloWorldAltManifest"
     val helloWorldPackageParam = "tests/src/test/scala/testFixtures/helloWorldPackageParam"
     val incorrectManifestPath = "does/not/exist"
     val helloWorldAction = "openwhisk-helloworld/helloworld"
+    val helloWorldAltAction = "openwhisk-helloworld/helloworldAlt"
     val helloWorldActionPackage = "myPackage/helloworld"
 
     // statuses from deployWeb
@@ -86,6 +88,19 @@ class DeployWebTests extends TestHelpers
 
       // clean up after test
       wsk.action.delete(helloWorldAction)
+    }
+
+    // test to create the hello world template with alternate manifest from github
+    it should "create the hello world action with alternate manifest extension from github url" in {
+      makePostCallWithExpectedResult(JsObject(
+        "gitUrl" -> JsString(deployTestRepo),
+        "manifestPath" -> JsString(helloWorldAltManifest),
+        "wskApiHost" -> JsString(wskprops.apihost),
+        "wskAuth" -> JsString(wskprops.authKey)
+      ), successStatus, 200);
+
+      // clean up after test
+      wsk.action.delete(helloWorldAltAction)
     }
 
     // test to create the hello world template from github with myPackage as package name
